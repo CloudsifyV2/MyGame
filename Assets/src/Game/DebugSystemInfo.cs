@@ -74,10 +74,21 @@ namespace MyGame.Game
                 Vector3 p = player.transform.position;
                 GUILayout.Label($"Player Pos: X={p.x:F1} Y={p.y:F1} Z={p.z:F1}");
 
-                // Biome at player
-                var biome = MyGame.WorldManager.TerrainGenerator.GetBiome(Mathf.FloorToInt(p.x), Mathf.FloorToInt(p.z));
+                // NEW: Get grounded state from CharacterMovement
+                var movement = player.GetComponent<CharacterMovement>();
+                if (movement != null)
+                {
+                    GUILayout.Label($"Player Grounded: {movement.isGrounded}");
+                }
+                else
+                {
+                    GUILayout.Label("Player Grounded: <no CharacterMovement>");
+                }
+
+                var biome = MyGame.WorldManager.TerrainGenerator.GetBiome(
+                    Mathf.FloorToInt(p.x), Mathf.FloorToInt(p.z));
                 GUILayout.Label($"Player Biome: {biome}");
-            }
+            } 
             else
             {
                 GUILayout.Label("Player: <not found>");

@@ -24,7 +24,7 @@ public class CharacterMovement : MonoBehaviour
     private Vector2 moveInput;
     private bool isSprinting;
     private bool jumpPressed;       // NEW: stored jump input for FixedUpdate
-    private bool isGrounded;
+    public bool isGrounded;
     private Vector3 movement;
 
     private float lastJumpTime = -10f;
