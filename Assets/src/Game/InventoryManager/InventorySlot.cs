@@ -1,38 +1,36 @@
-namespace Game.InventoryManager
+using UnityEngine;
+using UnityEngine.UI;
+
+public class InventorySlot : MonoBehaviour
 {
-    [System.Serializable]
-    public class InventorySlot
+    public Image icon;
+    public Button removeButton;
+
+    private Item item;
+
+    public void AddItem(Item newItem)
     {
-        public ItemData item;
-        public int amount;
+        item = newItem;
+        icon.sprite = item.icon;
+        icon.enabled = true;
+        removeButton.interactable = true;
+    }
 
-        public bool isEmpty => item == null;
+    public void ClearSlot()
+    {
+        item = null;
+        icon.sprite = null;
+        icon.enabled = false;
+        removeButton.interactable = false;
+    }
 
-        public InventorySlot() => ClearSlot();
+    public void OnRemoveButton()
+    {
+        Inventory.instance.Remove(item);
+    }
 
-        public void ClearSlot()
-        {
-            item = null;
-            amount = 0;
-        }
-
-        public bool CanItemBeAdded(ItemData newItem)
-        {
-            return !isEmpty && item == newItem && item.isStackable && amount < item.maxStackSize;
-        }
-
-        public void AddItem(ItemData newItem, int count = 1)
-        {
-            if (isEmpty)
-            {
-                item = newItem;
-                amount = count;
-            }
-            else if (CanItemBeAdded(newItem))
-            {
-                amount += count;
-            }
-        }
-
+    public bool HasItem()
+    {
+        return item != null;
     }
 }

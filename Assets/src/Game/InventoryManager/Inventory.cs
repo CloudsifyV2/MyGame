@@ -1,57 +1,70 @@
-using System.Collections.Generic;
 using UnityEngine;
+using System.Collections.Generic;
 
-namespace Game.InventoryManager
+public class Inventory : MonoBehaviour
 {
-    public class Inventory : MonoBehaviour
+    public static Inventory instance;
+
+    public int hotbarSize = 9;
+    public int inventorySize = 18;
+
+    public List<Item> hotbarItems = new List<Item>();
+    public List<Item> inventoryItems = new List<Item>();
+
+    private void Awake()
     {
-        public int inventorySize = 36;
-        public List<InventorySlot> slots = new();
-
-        void Awake()
+        if (instance != null)
         {
-            for (int i = 0; i < inventorySize; i++)
-                slots.Add(new InventorySlot());
+            Debug.LogWarning("More than one Inventory instance found!");
+            return;
+        }
+        instance = this;
+
+        // Initialize slots
+        for (int i = 0; i < hotbarSize; i++) hotbarItems.Add(null);
+        for (int i = 0; i < inventorySize; i++) inventoryItems.Add(null);
+    }
+
+    // Add item to inventory first, then hotbar if possible
+    public bool Add(Item item)
+    {
+        for (int i = 0; i < inventoryItems.Count; i++)
+        {
+            if (inventoryItems[i] == null)
+            {
+                inventoryItems[i] = item;
+                Debug.Log(item.itemName + " added to inventory slot " + i);
+                return true;
+            }
         }
 
-        public bool AddItem(ItemData item, int amount = 1)
+        for (int i = 0; i < hotbarItems.Count; i++)
         {
-            // Try to stack first
-            foreach (var slot in slots)
+            if (hotbarItems[i] == null)
             {
-                if (slot.CanItemBeAdded(item))
-                {
-                    slot.AddItem(item, amount);
-                    return true;
-                }
+                hotbarItems[i] = item;
+                Debug.Log(item.itemName + " added to hotbar slot " + i);
+                return true;
             }
-
-            // Otherwise, find empty slot
-            foreach (var slot in slots)
-            {
-                if (slot.isEmpty)
-                {
-                    slot.AddItem(item, amount);
-                    return true;
-                }
-            }
-
-            Debug.Log("Inventory full! Cannot add item: " + item.itemName);
-            return false;
         }
 
-        public void RemoveItem(ItemData item, int amount = 1)
+        Debug.Log("Inventory Full! Could not add " + item.itemName);
+        return false;
+    }
+
+    public void Remove(Item item)
+    {
+        if (hotbarItems.Contains(item))
         {
-            foreach (var slot in slots)
-            {
-                if (slot.item == item)
-                {
-                    slot.amount -= amount;
-                    if (slot.amount <= 0)
-                        slot.ClearSlot();
-                    return;
-                }
-            }
+            int index = hotbarItems.IndexOf(item);
+            hotbarItems[index] = null;
+            Debug.Log(item.itemName + " removed from hotbar slot " + index);
+        }
+        else if (inventoryItems.Contains(item))
+        {
+            int index = inventoryItems.IndexOf(item);
+            inventoryItems[index] = null;
+            Debug.Log(item.itemName + " removed from inventory slot " + index);
         }
     }
 }

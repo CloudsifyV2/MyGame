@@ -57,8 +57,8 @@ namespace MyGame.WorldManager
                 }
             }
 
-            Debug.Log($"Chunk {chunk.position}: Grass={grassCount}, Dirt={dirtCount}, Stone={stoneCount}, Sand={sandCount}");
-            Debug.Log($"Total vertices: {vertices.Count}, triangles: {triangles.Count/3}, UVs: {uvs.Count}");
+            //Debug.Log($"Chunk {chunk.position}: Grass={grassCount}, Dirt={dirtCount}, Stone={stoneCount}, Sand={sandCount}");
+            //Debug.Log($"Total vertices: {vertices.Count}, triangles: {triangles.Count/3}, UVs: {uvs.Count}");
 
             // Create the mesh
             Mesh mesh = new Mesh();

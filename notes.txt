@@ -1,0 +1,9 @@
+4. UI Setup
+
+Hotbar: Create a horizontal panel with 9 buttons/images.
+
+Inventory: Create a panel with 18 buttons/images arranged in a grid.
+
+Attach InventorySlot to each button and connect the icon Image and remove button.
+
+The Inventory script will manage the data; you’ll need a separate UI update script to sync the UI icons with Inventory lists.

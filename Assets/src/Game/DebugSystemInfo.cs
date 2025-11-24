@@ -27,8 +27,8 @@ namespace MyGame.Game
 
         void Update()
         {
-            if (Input.GetKeyDown(toggleKey))
-                visible = !visible;
+            //if (Input.GetKeyDown(toggleKey))
+            visible = visible;
 
             deltaTime += (Time.unscaledDeltaTime - deltaTime) * 0.1f;
         }
