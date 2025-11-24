@@ -1739,7 +1739,7 @@ Transform:
   m_GameObject: {fileID: 4970528342888976047}
   serializedVersion: 2
   m_LocalRotation: {x: 0.1047535, y: -0, z: -0, w: 0.9944982}
-  m_LocalPosition: {x: 0, y: 2.129, z: -1.5580001}
+  m_LocalPosition: {x: 0, y: 1.821, z: -0.09}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1865,8 +1865,8 @@ MonoBehaviour:
   zoomSpeed: 2
   minDistance: 1
   maxDistance: 1
-  xSpeed: 120
-  ySpeed: 120
+  xSpeed: 50
+  ySpeed: 50
   yMinLimit: -20
   yMaxLimit: 80
   cameraHeightOffset: 1.5

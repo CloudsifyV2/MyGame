@@ -72,7 +72,7 @@ public class CharacterMovement : MonoBehaviour
             // Try to find camera if Camera.main is null
             Camera cam = Camera.main;
             if (cam == null)
-                cam = FindObjectOfType<Camera>();
+                cam = Object.FindFirstObjectByType<Camera>();
 
             if (cam != null)
             {

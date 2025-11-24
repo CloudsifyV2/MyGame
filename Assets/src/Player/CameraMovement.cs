@@ -1,33 +1,36 @@
 using UnityEngine;
-using UnityEngine.InputSystem; // New Input System
+using UnityEngine.InputSystem;
 
-public class ThirdPersonCamera : MonoBehaviour
+/// <summary>
+/// Simple first-person camera. Attach this to the Camera and set `player` to the player's transform.
+/// Mouse controls look; player yaw is rotated with the camera so movement aligns with view (like Minecraft).
+/// </summary>
+public class FirstPersonCamera : MonoBehaviour
 {
-    public Transform target;
-    public float distance = 2.0f;
-    public float zoomSpeed = 2f;
-    public float minDistance = 2f;
-    public float maxDistance = 10f;
+    [Tooltip("Player transform to follow and rotate (only yaw will be applied)")]
+    public Transform player;
 
-    public float xSpeed = 120.0f;
-    public float ySpeed = 120.0f;
+    [Tooltip("Eye height above player's position")]
+    public float eyeHeight = 1.6f;
 
-    public float yMinLimit = -20f;
-    public float yMaxLimit = 80f;
-    public float cameraHeightOffset = 1.5f;
+    [Tooltip("Mouse sensitivity multiplier")]
+    public float mouseSensitivity = 0.15f;
 
+    [Tooltip("Maximum up/down look angle in degrees")]
+    public float maxPitch = 89f;
 
-    private float x = 0.0f;
-    private float y = -100.0f;
+    private float yaw = 0f;
+    private float pitch = 0f;
 
     private Vector2 lookInput;
-    private float scrollInput;
+    // ensure we sync initial camera yaw/pitch to player when player is assigned
+    private bool syncedWithPlayer = false;
 
     void Start()
     {
-        Vector3 angles = transform.eulerAngles;
-        x = angles.y;
-        y = angles.x;
+        Vector3 e = transform.eulerAngles;
+        yaw = e.y;
+        pitch = e.x;
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
@@ -35,40 +38,41 @@ public class ThirdPersonCamera : MonoBehaviour
 
     void Update()
     {
-        lookInput = Mouse.current.delta.ReadValue();
-        scrollInput = Mouse.current.scroll.ReadValue().y;
-    }
+        if (Mouse.current != null)
+            lookInput = Mouse.current.delta.ReadValue();
+        else
+            lookInput = new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"));
 
-    void LateUpdate()
-    {
-        if (target)
+        // If the player was just assigned, sync yaw/pitch to avoid snapping the player
+        if (player != null && !syncedWithPlayer)
         {
-            x += lookInput.x * xSpeed * Time.deltaTime;
-            y -= lookInput.y * ySpeed * Time.deltaTime;
+            // discard any accumulated raw mouse delta so the first frame doesn't produce a large jump
+            if (Mouse.current != null)
+                _ = Mouse.current.delta.ReadValue();
 
-            y = ClampAngle(y, yMinLimit, yMaxLimit);
-
-            // Rotate player with camera (Y axis only)
-            target.rotation = Quaternion.Euler(0, x, 0);
-
-            distance -= scrollInput * zoomSpeed * Time.deltaTime;
-            distance = Mathf.Clamp(distance, minDistance, maxDistance);
-
-            Quaternion rotation = Quaternion.Euler(y, x, 0);
-            Vector3 negDistance = new Vector3(0.0f, 0.0f, -distance);
-            Vector3 offset = new Vector3(0, cameraHeightOffset, 0);
-            Vector3 position = rotation * negDistance + target.position + offset;
-
-            transform.rotation = rotation;
-            transform.position = position;
+            yaw = player.eulerAngles.y;
+            pitch = transform.eulerAngles.x;
+            syncedWithPlayer = true;
         }
-    }
 
+        // apply mouse look
+        yaw += lookInput.x * mouseSensitivity;
+        pitch -= lookInput.y * mouseSensitivity;
+        pitch = Mathf.Clamp(pitch, -maxPitch, maxPitch);
 
-    static float ClampAngle(float angle, float min, float max)
-    {
-        if (angle < -360F) angle += 360F;
-        if (angle > 360F) angle -= 360F;
-        return Mathf.Clamp(angle, min, max);
+        // rotate player (yaw only)
+        if (player != null)
+        {
+            player.rotation = Quaternion.Euler(0f, yaw, 0f);
+            // position camera at player's eye
+            transform.position = player.position + Vector3.up * eyeHeight;
+        }
+        else
+        {
+            // if no player assigned, keep camera position unchanged
+        }
+
+        // apply camera pitch locally
+        transform.rotation = Quaternion.Euler(pitch, yaw, 0f);
     }
 }

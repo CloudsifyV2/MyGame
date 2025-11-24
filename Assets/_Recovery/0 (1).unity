@@ -468,7 +468,6 @@ GameObject:
   - component: {fileID: 1399710020}
   - component: {fileID: 1399710019}
   - component: {fileID: 1399710021}
-  - component: {fileID: 1399710022}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -489,7 +488,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MyGame.Game.GameManager
   prefab: {fileID: 2353170835417261953, guid: 1ac84f350743a0f40a9a0906e2915962, type: 3}
-  spawnXZ: {x: -96.4, y: -1565.5}
+  spawnXZ: {x: 0, y: 0}
 --- !u!4 &1399710020
 Transform:
   m_ObjectHideFlags: 0
@@ -512,28 +511,13 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1399710018}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0deb841b2e0aa154f9afdab51c12582e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FPSCounter
   fontSize: 24
   fontColor: {r: 1, g: 1, b: 1, a: 1}
---- !u!114 &1399710022
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1399710018}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 111e4feaf96952a45ad1f6d74a8e7580, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::MyGame.Game.DebugSystemInfo
-  toggleKey: 282
-  showOnStart: 1
-  windowPos: {x: 25, y: 10}
 --- !u!1 &1567218970
 GameObject:
   m_ObjectHideFlags: 0
@@ -651,7 +635,7 @@ MonoBehaviour:
   debugBiomeSampling: 0
   debugBiomeRadiusChunks: 6
   initialLoadRadius: 10
-  enableWater: 0
+  enableWater: 1
   spawnTrees: 1
   chunksPerFrame: 2
 --- !u!4 &1635525513
