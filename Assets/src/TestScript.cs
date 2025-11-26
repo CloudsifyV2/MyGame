@@ -1,11 +1,15 @@
 using UnityEngine;
+using MyGame.Player;
 
-public class TestScript : MonoBehaviour
+namespace MyGame
 {
-    public Item testItem;
-
-    void Start()
+    public class TestScript : MonoBehaviour
     {
-        Inventory.instance.Add(testItem);
+        public Item testItem;
+
+        void Start()
+        {
+            Inventory.instance.Add(testItem);
+        }
     }
-}
+    }

@@ -832,6 +832,7 @@ MonoBehaviour:
     m_Bits: 1
   groundedDelay: 0.12
   groundedVelocityThreshold: 0.2
+  isGrounded: 0
 --- !u!54 &8796326683962673226
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -919,11 +920,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 2353170835417261953}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 751d858f0c719de4db32fd5b2cd6f375, type: 3}
+  m_Script: {fileID: 11500000, guid: 9a600dca4336e4c41b797ebe49f58e90, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Game.InventoryManager.TestItemAdder
-  inventory: {fileID: 0}
-  testItem: {fileID: 11400000, guid: 2c491c443b78553478df63e6477d0119, type: 2}
+  health: 100
+  level: 0
+  foodLevel: 10
+  thirstLevel: 10
+  gameMode: {fileID: 11400000, guid: 4755723dd268c2f4399d9b87c49ba676, type: 2}
 --- !u!1 &2646047864762711736
 GameObject:
   m_ObjectHideFlags: 0

@@ -6,13 +6,13 @@ public class HotbarUI : MonoBehaviour
     public InventorySlot[] hotbarSlots;   // 9 UI slots
     private Inventory inventory;
 
-    private void Start()
+    void Start()
     {
         inventory = Inventory.instance;
         UpdateHotbar();
     }
 
-    private void Update()
+    void Update()
     {
         UpdateHotbar();   // update every frame OR call only on change
     }

@@ -25,25 +25,25 @@ public class Inventory : MonoBehaviour
         for (int i = 0; i < inventorySize; i++) inventoryItems.Add(null);
     }
 
-    // Add item to inventory first, then hotbar if possible
+    // Add item to hotbar first, then inventory if possible
     public bool Add(Item item)
     {
-        for (int i = 0; i < inventoryItems.Count; i++)
-        {
-            if (inventoryItems[i] == null)
-            {
-                inventoryItems[i] = item;
-                Debug.Log(item.itemName + " added to inventory slot " + i);
-                return true;
-            }
-        }
-
         for (int i = 0; i < hotbarItems.Count; i++)
         {
             if (hotbarItems[i] == null)
             {
                 hotbarItems[i] = item;
                 Debug.Log(item.itemName + " added to hotbar slot " + i);
+                return true;
+            }
+        }
+
+        for (int i = 0; i < inventoryItems.Count; i++)
+        {
+            if (inventoryItems[i] == null)
+            {
+                inventoryItems[i] = item;
+                Debug.Log(item.itemName + " added to inventory slot " + i);
                 return true;
             }
         }
