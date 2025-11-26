@@ -1,5 +1,5 @@
 using UnityEngine;
-using MyGame.Player;
+using MyGame.Inventory;
 
 namespace MyGame
 {

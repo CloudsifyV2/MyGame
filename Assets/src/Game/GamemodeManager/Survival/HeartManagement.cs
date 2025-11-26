@@ -1,13 +1,13 @@
 using UnityEngine;
 using MyGame.Player;
 
-namespace MyGame.Inventory.Survival
+namespace MyGame.GameModeManager.Survival
 {    
     public class HeartManagement : MonoBehaviour {
 
         void Start()
         {
-            if (PlayerData.Instance.PlayerData.Instance.gameMode.modeName == "Survival")
+            if (PlayerData.Instance.gameMode.modeName == "Survival")
             {
                 // The player is playing in survival so we need to start the heart stuff.
 
