@@ -139,10 +139,10 @@ namespace MyGame.WorldManager
             Vector2[] faceUVs = BlockTextures.GetUVs(block, faceIndex);
             
             // Debug first few UVs to verify they're correct
-            if (vertCount < 12) // First 3 faces
-            {
-                Debug.Log($"Block {block}, Face {faceIndex}: UV0={faceUVs[0]}, UV1={faceUVs[1]}, UV2={faceUVs[2]}, UV3={faceUVs[3]}");
-            }
+            // if (vertCount < 12) // First 3 faces
+            // {
+            //     Debug.Log($"Block {block}, Face {faceIndex}: UV0={faceUVs[0]}, UV1={faceUVs[1]}, UV2={faceUVs[2]}, UV3={faceUVs[3]}");
+            // }
             
             uvs.AddRange(faceUVs);
         }

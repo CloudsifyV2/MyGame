@@ -66,5 +66,5 @@
     "explorer.fileNesting.patterns": {
         "*.sln": "*.csproj"
     },
-    "dotnet.defaultSolution": "P4 - Immersive.sln"
+    "dotnet.defaultSolution": "MyGame.sln"
 }

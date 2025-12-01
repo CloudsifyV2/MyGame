@@ -145,6 +145,111 @@ namespace MyGame.WorldManager
             }
         }
 
+        /// <summary>
+        /// Get the block type at world integer coordinates. Returns BlockType.Air if out of range or not found.
+        /// </summary>
+        public BlockType GetBlockAt(int worldX, int worldY, int worldZ)
+        {
+            if (worldY < 0 || worldY >= WorldData.ChunkHeight) return BlockType.Air;
+
+            Vector2Int chunkPos = new Vector2Int(
+                Mathf.FloorToInt((float)worldX / WorldData.ChunkSize),
+                Mathf.FloorToInt((float)worldZ / WorldData.ChunkSize)
+            );
+
+            if (!chunks.TryGetValue(chunkPos, out GameObject chunkObj))
+                return BlockType.Air;
+
+            var renderer = chunkObj.GetComponent<ChunkRenderer>();
+            if (renderer == null || renderer.chunk == null) return BlockType.Air;
+
+            int localX = worldX - Mathf.FloorToInt(chunkObj.transform.position.x);
+            int localZ = worldZ - Mathf.FloorToInt(chunkObj.transform.position.z);
+
+            if (localX < 0 || localX >= WorldData.ChunkSize || localZ < 0 || localZ >= WorldData.ChunkSize)
+                return BlockType.Air;
+
+            return renderer.chunk.blocks[localX, worldY, localZ];
+        }
+
+        /// <summary>
+        /// Set a block at world integer coordinates. Returns true if successful and rebuilds affected chunks.
+        /// </summary>
+        public bool SetBlockAt(int worldX, int worldY, int worldZ, BlockType newBlock)
+        {
+            if (worldY < 0 || worldY >= WorldData.ChunkHeight) return false;
+
+            Vector2Int chunkPos = new Vector2Int(
+                Mathf.FloorToInt((float)worldX / WorldData.ChunkSize),
+                Mathf.FloorToInt((float)worldZ / WorldData.ChunkSize)
+            );
+
+            if (!chunks.TryGetValue(chunkPos, out GameObject chunkObj))
+                return false;
+
+            var renderer = chunkObj.GetComponent<ChunkRenderer>();
+            if (renderer == null || renderer.chunk == null) return false;
+
+            int localX = worldX - Mathf.FloorToInt(chunkObj.transform.position.x);
+            int localZ = worldZ - Mathf.FloorToInt(chunkObj.transform.position.z);
+
+            if (localX < 0 || localX >= WorldData.ChunkSize || localZ < 0 || localZ >= WorldData.ChunkSize)
+                return false;
+
+            // Update block and rebuild this chunk
+            renderer.chunk.blocks[localX, worldY, localZ] = newBlock;
+            renderer.BuildChunkMesh(renderer.chunk);
+
+            // If block is on a chunk boundary, also rebuild adjacent chunk to update shared faces
+            bool rebuildLeft = (localX == 0);
+            bool rebuildRight = (localX == WorldData.ChunkSize - 1);
+            bool rebuildBack = (localZ == 0);
+            bool rebuildFront = (localZ == WorldData.ChunkSize - 1);
+
+            if (rebuildLeft)
+            {
+                Vector2Int leftChunk = new Vector2Int(chunkPos.x - 1, chunkPos.y);
+                if (chunks.TryGetValue(leftChunk, out GameObject leftObj))
+                {
+                    var leftRenderer = leftObj.GetComponent<ChunkRenderer>();
+                    if (leftRenderer != null && leftRenderer.chunk != null)
+                        leftRenderer.BuildChunkMesh(leftRenderer.chunk);
+                }
+            }
+            if (rebuildRight)
+            {
+                Vector2Int rightChunk = new Vector2Int(chunkPos.x + 1, chunkPos.y);
+                if (chunks.TryGetValue(rightChunk, out GameObject rightObj))
+                {
+                    var rightRenderer = rightObj.GetComponent<ChunkRenderer>();
+                    if (rightRenderer != null && rightRenderer.chunk != null)
+                        rightRenderer.BuildChunkMesh(rightRenderer.chunk);
+                }
+            }
+            if (rebuildBack)
+            {
+                Vector2Int backChunk = new Vector2Int(chunkPos.x, chunkPos.y - 1);
+                if (chunks.TryGetValue(backChunk, out GameObject backObj))
+                {
+                    var backRenderer = backObj.GetComponent<ChunkRenderer>();
+                    if (backRenderer != null && backRenderer.chunk != null)
+                        backRenderer.BuildChunkMesh(backRenderer.chunk);
+                }
+            }
+            if (rebuildFront)
+            {
+                Vector2Int frontChunk = new Vector2Int(chunkPos.x, chunkPos.y + 1);
+                if (chunks.TryGetValue(frontChunk, out GameObject frontObj))
+                {
+                    var frontRenderer = frontObj.GetComponent<ChunkRenderer>();
+                    if (frontRenderer != null && frontRenderer.chunk != null)
+                        frontRenderer.BuildChunkMesh(frontRenderer.chunk);
+                }
+            }
+
+            return true;
+        }
+
         void Update()
         {
             if (player == null) return;

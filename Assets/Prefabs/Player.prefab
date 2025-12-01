@@ -762,7 +762,8 @@ GameObject:
   - component: {fileID: 8796326683962673226}
   - component: {fileID: 8170335487683865753}
   - component: {fileID: 2013206011964892127}
-  - component: {fileID: 8447302914943380964}
+  - component: {fileID: 4949381481274143330}
+  - component: {fileID: -8157596571319206298}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -911,7 +912,7 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 2, z: 1}
   m_Center: {x: 0, y: 1, z: 0}
---- !u!114 &8447302914943380964
+--- !u!114 &4949381481274143330
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -922,12 +923,26 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9a600dca4336e4c41b797ebe49f58e90, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Game.InventoryManager.TestItemAdder
+  m_EditorClassIdentifier: Assembly-CSharp::MyGame.Player.PlayerData
   health: 100
   level: 0
   foodLevel: 10
   thirstLevel: 10
   gameMode: {fileID: 11400000, guid: 4755723dd268c2f4399d9b87c49ba676, type: 2}
+--- !u!114 &-8157596571319206298
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2353170835417261953}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d397e4e7ba047ec4792da4bbe10718b8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BlockInteraction
+  reach: 2
+  placeBlock: 1
 --- !u!1 &2646047864762711736
 GameObject:
   m_ObjectHideFlags: 0

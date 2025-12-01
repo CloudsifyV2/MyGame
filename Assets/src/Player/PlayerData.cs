@@ -15,6 +15,8 @@ namespace MyGame.Player
         [Header("Gamemode")]
         public GameModeProfile gameMode;
 
+        public bool initialized { get; private set; } = false; // new flag
+
         private void Awake()
         {
             Instance = this;
@@ -23,6 +25,7 @@ namespace MyGame.Player
         private void Start()
         {
             ApplyGamemode();
+            initialized = true; // mark as ready
         }
 
         public void ApplyGamemode()
@@ -31,9 +34,9 @@ namespace MyGame.Player
 
             health = gameMode.maxHealth;
 
-            // Example usage of rules:
             if (!gameMode.hasHunger) foodLevel = 100;
             if (!gameMode.hasThirst) thirstLevel = 100;
         }
     }
+
 }

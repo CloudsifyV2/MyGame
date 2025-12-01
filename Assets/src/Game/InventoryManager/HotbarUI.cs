@@ -21,10 +21,10 @@ public class HotbarUI : MonoBehaviour
     {
         for (int i = 0; i < hotbarSlots.Length; i++)
         {
-            Item item = inventory.hotbarItems[i];
+            var stack = inventory.hotbarItems[i];
 
-            if (item != null)
-                hotbarSlots[i].AddItem(item);   // show icon
+            if (stack != null && stack.item != null)
+                hotbarSlots[i].AddItem(stack.item, stack.count);   // show icon + count
             else
                 hotbarSlots[i].ClearSlot();      // empty slot
         }

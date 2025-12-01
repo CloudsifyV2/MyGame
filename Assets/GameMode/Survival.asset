@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31adf42f8e8aa46449b6e8f75146eaf9, type: 3}
   m_Name: Survival
   m_EditorClassIdentifier: Assembly-CSharp::GameModeProfile
-  modeName: 
+  modeName: Survival
   takesDamage: 1
   hasHunger: 1
   hasThirst: 1
   canBreakBlocks: 1
   canFly: 0
-  maxHealth: 20
+  maxHealth: 100
