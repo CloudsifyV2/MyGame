@@ -9,7 +9,6 @@ public class BlockInteraction : MonoBehaviour
 
     private Camera cam;
     private World world;
-    private Hotbar hotbar;
 
     void Start()
     {
@@ -20,15 +19,11 @@ public class BlockInteraction : MonoBehaviour
         world = Object.FindFirstObjectByType<World>();
         if (world == null)
             Debug.LogError("BlockInteraction: No World found in scene.");
-
-        hotbar = Object.FindFirstObjectByType<Hotbar>();
-        if (hotbar == null)
-            Debug.LogError("BlockInteraction: No Hotbar found in scene.");
     }
 
     void Update()
     {
-        if (cam == null || world == null || hotbar == null) return;
+        if (cam == null || world == null) return;
 
         bool left = false;
         bool right = false;
@@ -96,23 +91,25 @@ public class BlockInteraction : MonoBehaviour
         // PLACE BLOCK FROM HOTBAR
         else if (right)
         {
-            Item selected = hotbar.GetSelectedItem();
-            if (selected == null) return;
+            // Item selected = hotbar.GetSelectedItem();
+            // if (selected == null) return;
 
-            BlockType placeType = BlockItemRegistry.GetBlockForItem(selected);
-            if (placeType == BlockType.Air) return; // not a block item
+            // BlockType placeType = BlockItemRegistry.GetBlockForItem(selected);
+            // if (placeType == BlockType.Air) return; // not a block item
 
-            int placeX = worldX + faceOffset.x;
-            int placeY = worldY + faceOffset.y;
-            int placeZ = worldZ + faceOffset.z;
+            // int placeX = worldX + faceOffset.x;
+            // int placeY = worldY + faceOffset.y;
+            // int placeZ = worldZ + faceOffset.z;
 
-            if (placeY >= 0 && placeY < WorldData.ChunkHeight)
-            {
-                if (world.SetBlockAt(placeX, placeY, placeZ, placeType))
-                {
-                    Inventory.instance.Remove()
-                }
-            }
+            // if (placeY >= 0 && placeY < WorldData.ChunkHeight)
+            // {
+            //     if (world.SetBlockAt(placeX, placeY, placeZ, placeType))
+            //     {
+            //         Inventory.instance.Remove();
+            //     }
+            // }
+
+            Debug.Log("Item placing not implemented yet.");
         }
     }
 }

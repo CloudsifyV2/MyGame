@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Item
   id: grass_block
   itemName: Grass Block
-  icon: {fileID: 21300000, guid: 1a6504fa5f23ca341b62a07d4902d3a1, type: 3}
+  icon: {fileID: 21300000, guid: deb25f0420bb5e947a353dd38e117675, type: 3}
   stackable: 1
   maxStackSize: 64
   category: blocks
