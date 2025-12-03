@@ -18,6 +18,6 @@ namespace MyGame.WorldManager
         // Smaller biome noise scale gives more frequent biome changes across world
         public const float BiomeNoiseScale = 64f;
         // A seed offset can be used to change overall world
-        public static int WorldSeed = 0;
+        public static int WorldSeed = 236426421;
     }
 }

@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using MyGame.WorldManager;
 using MyGame.Register;
+using MyGame.Inventory;
 
 public class BlockInteraction : MonoBehaviour
 {
@@ -91,25 +92,23 @@ public class BlockInteraction : MonoBehaviour
         // PLACE BLOCK FROM HOTBAR
         else if (right)
         {
-            // Item selected = hotbar.GetSelectedItem();
-            // if (selected == null) return;
+            Item selected = HotbarSelector.instance != null ? HotbarSelector.instance.GetSelectedItem() : null;
+            if (selected == null) return;
 
-            // BlockType placeType = BlockItemRegistry.GetBlockForItem(selected);
-            // if (placeType == BlockType.Air) return; // not a block item
+            BlockType placeType = BlockItemRegistry.GetBlockForItem(selected);
+            if (placeType == BlockType.Air) return; // not a block item
 
-            // int placeX = worldX + faceOffset.x;
-            // int placeY = worldY + faceOffset.y;
-            // int placeZ = worldZ + faceOffset.z;
+            int placeX = worldX + faceOffset.x;
+            int placeY = worldY + faceOffset.y;
+            int placeZ = worldZ + faceOffset.z;
 
-            // if (placeY >= 0 && placeY < WorldData.ChunkHeight)
-            // {
-            //     if (world.SetBlockAt(placeX, placeY, placeZ, placeType))
-            //     {
-            //         Inventory.instance.Remove();
-            //     }
-            // }
-
-            Debug.Log("Item placing not implemented yet.");
+            if (placeY >= 0 && placeY < WorldData.ChunkHeight)
+            {
+                if (world.SetBlockAt(placeX, placeY, placeZ, placeType))
+                {
+                    Inventory.instance?.Remove(selected);
+                }
+            }
         }
     }
 }

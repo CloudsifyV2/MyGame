@@ -1,7 +1,9 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-public class Inventory : MonoBehaviour
+namespace MyGame.Inventory
+{
+    public class Inventory : MonoBehaviour
 {
     public static Inventory instance;
 
@@ -126,4 +128,5 @@ public class Inventory : MonoBehaviour
             }
         }
     }
+}
 }

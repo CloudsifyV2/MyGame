@@ -1,7 +1,9 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class HotbarUI : MonoBehaviour
+namespace MyGame.Inventory
+{
+    public class HotbarUI : MonoBehaviour
 {
     public InventorySlot[] hotbarSlots;   // 9 UI slots
     private Inventory inventory;
@@ -29,4 +31,5 @@ public class HotbarUI : MonoBehaviour
                 hotbarSlots[i].ClearSlot();      // empty slot
         }
     }
+}
 }

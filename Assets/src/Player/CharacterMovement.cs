@@ -20,6 +20,7 @@ public class CharacterMovement : MonoBehaviour
 
     private Rigidbody rb;
     private Animator animator;
+    private Collider col;
 
     private Vector2 moveInput;
     private bool isSprinting;
@@ -37,6 +38,10 @@ public class CharacterMovement : MonoBehaviour
 
         // Prevent rotation
         rb.constraints = RigidbodyConstraints.FreezeRotation;
+
+        // cache collider for ground checks (falls back if none found)
+        col = GetComponent<Collider>();
+        if (col == null) col = GetComponentInChildren<Collider>();
 
         animator = GetComponent<Animator>();
         if (animator == null)
@@ -92,9 +97,17 @@ public class CharacterMovement : MonoBehaviour
 
     void FixedUpdate()
     {
-        // Ground check should be in FixedUpdate
-        isGrounded = Physics.Raycast(transform.position, Vector3.down,
-            groundCheckDistance, groundLayerMask);
+        // Ground check: use a SphereCast (more robust for thin/angled faces from chunk generator)
+        float sphereRadius = 0.25f;
+        if (col != null)
+        {
+            // use the smaller horizontal extent as base radius
+            sphereRadius = Mathf.Max(0.12f, Mathf.Min(col.bounds.extents.x, col.bounds.extents.z) * 0.6f);
+        }
+        // start a little above the transform to avoid missing short geometry gaps
+        Vector3 sphereOrigin = transform.position + Vector3.up * 0.1f;
+        float castDistance = groundCheckDistance + 0.12f;
+        isGrounded = Physics.SphereCast(sphereOrigin, sphereRadius, Vector3.down, out RaycastHit groundHit, castDistance, groundLayerMask, QueryTriggerInteraction.Ignore);
 
         // Handle jump with ZERO delay
         if (jumpPressed && isGrounded)

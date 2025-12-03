@@ -40,6 +40,9 @@ namespace MyGame.WorldManager
 
         void Start()
         {
+
+            
+
             // Find player if not assigned
             if (player == null)
             {
@@ -86,6 +89,12 @@ namespace MyGame.WorldManager
                     Debug.LogError("Assigned material has no texture!");
                 }
             }
+
+            // Generate a new random world seed for this run BEFORE we start generating chunks
+            int seed = System.Environment.TickCount;
+            WorldData.WorldSeed = seed;
+            UnityEngine.Random.InitState(seed);
+            Debug.Log($"World seed initialized: {seed}");
 
             // Generate initial chunks
             if (player != null)
